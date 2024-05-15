@@ -16,9 +16,10 @@ public class Player extends Entity {
         this.keyHandler = keyHandler;
         this.setDefoultValues();
         this.getPlayerImage();
+        bounds = new Rectangle(0,0,20,20);
     }
     public void setDefoultValues(){
-        x = 100;
+        x = 170;
         y = 100;
         speed = 4;
         direction = "down";
@@ -38,20 +39,35 @@ public class Player extends Entity {
     public void update(){
         if(keyHandler.upPressed){
             direction = "up";
-            y -= speed;
 
         }
         else if(keyHandler.downPressed){
             direction = "down";
-            y += speed;
         }
         else if(keyHandler.leftPressed){
             direction = "left";
-            x -= speed;
         }
         else if(keyHandler.rightPressed){
             direction = "right";
-            x += speed;
+        }
+        collisionOn = false;
+        gp.collisionChecker.checkTile(this);
+
+        if(collisionOn == false){
+            switch (direction){
+                case "up":
+                    y -= speed;
+                    break;
+                case "down":
+                    y += speed;
+                    break;
+                case "left":
+                    x -= speed;
+                    break;
+                case "right":
+                    x += speed;
+                    break;
+            }
         }
     }
     public void draw(Graphics2D g2d){

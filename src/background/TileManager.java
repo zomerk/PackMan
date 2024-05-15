@@ -13,12 +13,14 @@ import java.io.InputStreamReader;
 
 public class TileManager {
     GamePanel gp;
-    Tile[] tiles;
-    int mapTileNum[][];
+    public Tile[] tiles;
+    public int mapTileNum[][];
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
         tiles = new Tile[27];
+        tiles[0] = new Tile();
+        tiles[0].collision = false;
         mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
         getTileImage();
         loadTileImage();
@@ -53,6 +55,7 @@ public class TileManager {
             try {
                 tiles[i] = new Tile();
                 tiles[i].image = ImageIO.read(getClass().getResourceAsStream("/resources/images/background/" + i + ".png"));
+
             }catch (IOException e){
                 e.printStackTrace();
             }

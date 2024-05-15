@@ -20,3 +20,6 @@ public class Main {
         gamePanel.startGameThread();
     }
 }
+
+//https://github.com/arminkz/Pacman/tree/master/resources/images
+// https://www.youtube.com/watch?v=oPzPpUcDiYY&list=PL_QPQmz5C6WUF-pOQDsbsKbaBZqXj4qSq&index=7
