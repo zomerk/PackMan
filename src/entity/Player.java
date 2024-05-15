@@ -6,7 +6,6 @@ import main.KeyHandler;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.security.Key;
 
 public class Player extends Entity {
     GamePanel gp;
@@ -26,10 +25,10 @@ public class Player extends Entity {
     }
     public void getPlayerImage(){
         try{
-            up = ImageIO.read(getClass().getResourceAsStream("src/res/PackmanUp.png"));
-            down = ImageIO.read(getClass().getResourceAsStream("src/res/PackmanDown.png"));
-            left = ImageIO.read(getClass().getResourceAsStream("src/res/PackmanLeft.png"));
-            right = ImageIO.read(getClass().getResourceAsStream("src/res/PackmanRight.png"));
+            up = ImageIO.read(getClass().getResource("/resources/images/characters/PacmanUp.png"));
+            down = ImageIO.read(getClass().getResource("/resources/images/characters/PacmanDown.png"));
+            left = ImageIO.read(getClass().getResource("/resources/images/characters/PacmanLeft.png"));
+            right = ImageIO.read(getClass().getResource("/resources/images/characters/PacmanRight.png"));
 
         }
         catch(Exception e){
