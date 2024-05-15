@@ -1,12 +1,15 @@
+package main;
+
+import entity.Player;
+
 import javax.swing.*;
 import java.awt.*;
-import java.security.Key;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
     final int originalTileSize = 16; // 16x16 packman size
     final int scale = 3;
-    final int tileSize = originalTileSize * scale;
+    public final int tileSize = originalTileSize * scale;
     final int maxScreenCol = 28;
     final int maxScreenRow = 36;
     final int screenWidth = maxScreenCol * tileSize;
@@ -16,11 +19,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
+    Player player = new Player(this,keyHandler);
 
-    //Default Position
-    int packmanX = 100;
-    int packmanY = 100;
-    int playerSpeed = 4;
+
 
 
     public GamePanel() {
@@ -63,26 +64,17 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update(){
-        if(keyHandler.upPressed){
-            packmanY -= playerSpeed;
-
-        }
-        else if(keyHandler.downPressed){
-            packmanY += playerSpeed;
-        }
-        else if(keyHandler.leftPressed){
-            packmanX -= playerSpeed;
-        }
-        else if(keyHandler.rightPressed){
-            packmanX += playerSpeed;
-        }
+        player.update();
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(packmanX, packmanY, tileSize, tileSize);
+        player.draw(g2d);
         g2d.dispose();
 
     }
 }
+
+
+
+// https://arcarc.xmission.com/Web%20Archives/Pac%20Man/Pacman%20Graphics/PACANAC.htm
