@@ -16,12 +16,12 @@ public class Player extends Entity {
         this.keyHandler = keyHandler;
         this.setDefoultValues();
         this.getPlayerImage();
-        bounds = new Rectangle(0,0,20,20);
+        bounds = new Rectangle(8,8,12,12);
     }
     public void setDefoultValues(){
         x = 170;
         y = 100;
-        speed = 4;
+        speed = 2;
         direction = "down";
     }
     public void getPlayerImage(){
