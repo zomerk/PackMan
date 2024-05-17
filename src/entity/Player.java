@@ -16,13 +16,14 @@ public class Player extends Entity {
         this.keyHandler = keyHandler;
         this.setDefoultValues();
         this.getPlayerImage();
-        bounds = new Rectangle(8,8,12,12);
+        bounds = new Rectangle(2,2,26,26);
     }
     public void setDefoultValues(){
-        x = 170;
-        y = 100;
+        x = 300;
+        y = 300;
         speed = 2;
         direction = "down";
+        LastDirection = "";
     }
     public void getPlayerImage(){
         try{
@@ -36,39 +37,120 @@ public class Player extends Entity {
             e.printStackTrace();
         }
     }
-    public void update(){
-        if(keyHandler.upPressed){
+    public void update() {
+        String directionBeforePotencialColision = direction;
+        System.out.println(LastDirection);
+        if (keyHandler.upPressed) {
             direction = "up";
+            gp.collisionChecker.checkTile(this);
+            if (collisionOn == false) {
+                y -= speed;
 
+            }
+         else {
+             LastDirection = "up";
+             keyHandler.lastButtonPressed(directionBeforePotencialColision);
+             direction = directionBeforePotencialColision;
+            }
         }
         else if(keyHandler.downPressed){
             direction = "down";
+            gp.collisionChecker.checkTile(this);
+            if (collisionOn == false) {
+                y += speed;
+
+            }
+            else {
+                LastDirection = "down";
+                keyHandler.lastButtonPressed(directionBeforePotencialColision);
+                direction = directionBeforePotencialColision;
+            }
+
         }
         else if(keyHandler.leftPressed){
             direction = "left";
+            gp.collisionChecker.checkTile(this);
+            if (collisionOn == false) {
+                x -= speed;
+
+            }
+            else {
+                LastDirection = "left";
+                keyHandler.lastButtonPressed(directionBeforePotencialColision);
+                direction = directionBeforePotencialColision;
+            }
         }
         else if(keyHandler.rightPressed){
             direction = "right";
-        }
-        collisionOn = false;
-        gp.collisionChecker.checkTile(this);
+            gp.collisionChecker.checkTile(this);
+            if (collisionOn == false) {
+                x += speed;
 
-        if(collisionOn == false){
-            switch (direction){
-                case "up":
-                    y -= speed;
-                    break;
-                case "down":
-                    y += speed;
-                    break;
-                case "left":
-                    x -= speed;
-                    break;
-                case "right":
-                    x += speed;
-                    break;
+            }
+            else {
+                LastDirection = "right";
+                keyHandler.lastButtonPressed(directionBeforePotencialColision);
+                direction = directionBeforePotencialColision;
             }
         }
+        if(!LastDirection.equals(direction)) {
+            switch (LastDirection) {
+                case "up":
+                    direction = "up";
+                    gp.collisionChecker.checkTile(this);
+                    System.out.println(collisionOn);
+                    if (collisionOn == false) {
+                        y -= speed;
+                        keyHandler.lastButtonPressed(direction);
+                        LastDirection = "";
+                    } else {
+                        keyHandler.lastButtonPressed(directionBeforePotencialColision);
+                        direction = directionBeforePotencialColision;
+                    }
+                    break;
+                case "down":
+                    direction = "down";
+                    gp.collisionChecker.checkTile(this);
+                    if (collisionOn == false) {
+                        y += speed;
+                        keyHandler.lastButtonPressed(direction);
+                        LastDirection = "";
+                    } else {
+                        keyHandler.lastButtonPressed(directionBeforePotencialColision);
+                        direction = directionBeforePotencialColision;
+                    }
+                    break;
+                case "left":
+                    direction = "left";
+                    gp.collisionChecker.checkTile(this);
+                    if (collisionOn == false) {
+                        x -= speed;
+                        keyHandler.lastButtonPressed(direction);
+                        LastDirection = "";
+                    } else {
+                        keyHandler.lastButtonPressed(directionBeforePotencialColision);
+                        direction = directionBeforePotencialColision;
+                    }
+                    break;
+                case "right":
+                    direction = "right";
+                    gp.collisionChecker.checkTile(this);
+                    if (collisionOn == false) {
+                        x += speed;
+                        keyHandler.lastButtonPressed(direction);
+                        LastDirection = "";
+                    } else {
+                        keyHandler.lastButtonPressed(directionBeforePotencialColision);
+                        direction = directionBeforePotencialColision;
+                    }
+                    break;
+            }
+
+       }
+        else{
+            LastDirection = "";
+        }
+
     }
     public void draw(Graphics2D g2d){
         BufferedImage image = null;
