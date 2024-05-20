@@ -12,5 +12,6 @@ public class Point extends superObject{
         catch(IOException e){
             e.printStackTrace();
         }
+        collision = true;
     }
 }

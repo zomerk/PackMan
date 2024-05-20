@@ -11,5 +11,6 @@ public class Entity {
     public String direction;
     public String LastDirection;
     public Rectangle bounds;
+    public int boundX,boundsY;
     public boolean collisionOn = false;
 }

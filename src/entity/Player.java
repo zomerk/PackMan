@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyHandler;
+    int points = 0 ;
 
     public Player(GamePanel gp, KeyHandler keyHandler) {
         this.gp = gp;
@@ -17,6 +18,8 @@ public class Player extends Entity {
         this.setDefoultValues();
         this.getPlayerImage();
         bounds = new Rectangle(2,2,26,26);
+        boundX = bounds.x;
+        boundsY = bounds.y;
     }
     public void setDefoultValues(){
         x = 300;
@@ -148,7 +151,18 @@ public class Player extends Entity {
         else{
             LastDirection = "";
         }
+        int objIndex = gp.collisionChecker.checkObject(this,true);
+        //System.out.println(objIndex);
+        pickUpObject(objIndex);
+        System.out.println(points);
 
+
+    }
+    public void pickUpObject(int i){
+        if(i != 999){
+            gp.obj[i] = null;
+            points += 1;
+        }
     }
     public void draw(Graphics2D g2d){
         BufferedImage image = null;
@@ -168,4 +182,5 @@ public class Player extends Entity {
         }
         g2d.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
     }
+
 }

@@ -18,8 +18,10 @@ public class AssetSetter {
                     gp.obj[k] = new Point();
                     gp.obj[k].wordX = i * gp.tileSize;
                     gp.obj[k].wordY = j * gp.tileSize;
+                    gp.obj[k].bounds.x = gp.obj[k].wordX;
+                    gp.obj[k].bounds.y = gp.obj[k].wordY;
                     k++;
-                    System.out.println(k);
+                    //System.out.println(k);
                 }
             }
         }
