@@ -39,7 +39,6 @@ public class Player extends Entity {
     }
     public void update() {
         String directionBeforePotencialColision = direction;
-        System.out.println(LastDirection);
         if (keyHandler.upPressed) {
             direction = "up";
             gp.collisionChecker.checkTile(this);
@@ -98,7 +97,6 @@ public class Player extends Entity {
                 case "up":
                     direction = "up";
                     gp.collisionChecker.checkTile(this);
-                    System.out.println(collisionOn);
                     if (collisionOn == false) {
                         y -= speed;
                         keyHandler.lastButtonPressed(direction);
