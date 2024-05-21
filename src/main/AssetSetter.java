@@ -1,13 +1,17 @@
 package main;
 import background.TileManager;
+import entity.Blinky;
+import entity.Player;
 import object.Point;
 
 public class AssetSetter {
     GamePanel gp;
     TileManager tm;
-    public AssetSetter(GamePanel gp, TileManager tm) {
+    Player player;
+    public AssetSetter(GamePanel gp, TileManager tm, Player player) {
         this.gp = gp;
         this.tm = tm;
+        this.player = player;
 
     }
     public void setObject() {
@@ -25,5 +29,11 @@ public class AssetSetter {
                 }
             }
         }
+    }
+    public void setNPC(){
+         gp.npc[0] = new Blinky(gp,player);
+         gp.npc[0].x = gp.tileSize*13;
+         gp.npc[0].y = gp.tileSize*13;
+
     }
 }

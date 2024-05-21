@@ -71,7 +71,7 @@ public class CollisionChecker {
         e.bounds.y = e.y;
         for(int i=0; i < gp.obj.length; i++){
             if(gp.obj[i] != null){
-                System.out.println(e.bounds.intersects(gp.obj[i].bounds));
+                //System.out.println(e.bounds.intersects(gp.obj[i].bounds));
                 if(e.bounds.intersects(gp.obj[i].bounds)){
                    // System.out.println(gp.obj[i].bounds.x + " " + gp.obj[i].bounds.y);
                     if(gp.obj[i].collision){

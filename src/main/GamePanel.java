@@ -1,8 +1,10 @@
 package main;
 
 import background.TileManager;
+import entity.Entity;
 import entity.Player;
 import object.superObject;
+import screens.Screens;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,14 +22,19 @@ public class GamePanel extends JPanel implements Runnable {
     double FPS = 60;
 
     TileManager tileManager = new TileManager(this);
+    KeyHandler keyHandler = new KeyHandler(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    public AssetSetter assetSetter = new AssetSetter(this, tileManager);
-    KeyHandler keyHandler = new KeyHandler();
-    Thread gameThread;
     Player player = new Player(this,keyHandler);
-    public superObject[] obj = new superObject[321];
+    public AssetSetter assetSetter = new AssetSetter(this, tileManager,player);
+    Thread gameThread;
+    public superObject[] obj = new superObject[330];
+    public Screens screens = new Screens(this);
+    public Entity npc[] = new Entity[4];
 
-
+   public int gameState;
+   public final int playState = 1;
+   public final int pauseState = 2;
+   public final int endState = 3;
 
 
     public GamePanel() {
@@ -39,6 +46,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
     public void setupGame(){
         assetSetter.setObject();
+        assetSetter.setNPC();
+        gameState = playState;
     }
     public void startGameThread(){
         gameThread = new Thread(this);
@@ -51,7 +60,9 @@ public class GamePanel extends JPanel implements Runnable {
         double drawInterval = 1_000_000_000/FPS;
         double nextDrawTIme = System.nanoTime() + drawInterval;
         while(gameThread.isAlive()){
-
+            if(gameState == 4){
+                break;
+            }
 
             update();
 
@@ -73,7 +84,20 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update(){
-        player.update();
+        if(gameState == playState) {
+            player.update();
+            for(int i = 0; i < npc.length; i++){
+                if(npc[i] != null){
+                    npc[i].update();
+                }
+            }
+        }
+        if(gameState == pauseState){
+
+        }
+        if(gameState == endState){
+
+        }
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -84,7 +108,13 @@ public class GamePanel extends JPanel implements Runnable {
                 obj[i].draw(g2d,this);
             }
         }
+        for(int i =0; i < npc.length; i++){
+            if(npc[i]!= null){
+                npc[i].draw(g2d);
+            }
+        }
         player.draw(g2d);
+        screens.draw(g2d);
         g2d.dispose();
 
     }

@@ -8,12 +8,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Player extends Entity {
-    GamePanel gp;
     KeyHandler keyHandler;
     int points = 0 ;
 
     public Player(GamePanel gp, KeyHandler keyHandler) {
-        this.gp = gp;
+        super(gp);
         this.keyHandler = keyHandler;
         this.setDefoultValues();
         this.getPlayerImage();
@@ -41,6 +40,9 @@ public class Player extends Entity {
         }
     }
     public void update() {
+        if(points == 321){
+            gp.gameState = gp.endState;
+        }
         String directionBeforePotencialColision = direction;
         if (keyHandler.upPressed) {
             direction = "up";
@@ -154,7 +156,7 @@ public class Player extends Entity {
         int objIndex = gp.collisionChecker.checkObject(this,true);
         //System.out.println(objIndex);
         pickUpObject(objIndex);
-        System.out.println(points);
+        //System.out.println(points);
 
 
     }
