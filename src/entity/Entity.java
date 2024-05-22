@@ -13,6 +13,9 @@ import java.util.stream.Stream;
 public class Entity {
     public static String playerDirection;
     public static boolean panicMode = true;
+    public static boolean startTimerForPanicMode;
+    public static Timer panicModeTimer;
+    public static final int PANIC_MODE_DURATION = 25000;
     public GamePanel gp;
     public int x;
     public int y;
@@ -28,7 +31,32 @@ public class Entity {
         this.gp = gp;
     }
 
+    public static void startPanicMode() {
+        panicMode = true;
+        if (panicModeTimer != null) {
+            panicModeTimer.cancel();
+        }
+        panicModeTimer = new Timer();
+        panicModeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                endPanicMode();
+            }
+        }, PANIC_MODE_DURATION);
+    }
 
+    public static void endPanicMode() {
+        panicMode = false;
+        if (panicModeTimer != null) {
+            panicModeTimer.cancel();
+            panicModeTimer = null;
+        }
+    }
+
+    // Call this method to initialize the panic mode
+    public static void triggerPanicMode() {
+        startPanicMode();
+    }
 
     public void moveToGivenSquare(Point target) {
         possibleDirections = new LinkedList<>();

@@ -55,16 +55,6 @@ public class Pinky extends Entity{
                     break;
             }
         }
-//
-//        // Toggle between scatter and chase mode
-//        if ((currentTime - modeSwitchTimer) < modeSwitchInterval) {
-//            target = scatterTarget;
-//        } else {
-//            if ((currentTime - modeSwitchTimer) >= 2 * modeSwitchInterval) {
-//                modeSwitchTimer = currentTime;
-//            }
-//        }
-
         moveToGivenSquare(target);
     }
 }
