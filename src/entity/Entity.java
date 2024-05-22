@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Entity {
+    public static String playerDirection;
+    public static boolean panicMode = true;
     public GamePanel gp;
     public int x;
     public int y;
@@ -18,7 +20,7 @@ public class Entity {
     public BufferedImage up, down, left, right,character;
     public String direction;
     public String LastDirection = "up";
-    public Rectangle bounds = new Rectangle(0,0,28,28);
+    public Rectangle bounds = new Rectangle(2,2,26,26);
     public int boundX,boundsY;
     public boolean collisionOn = false;
     public LinkedList<String> possibleDirections;
@@ -59,7 +61,13 @@ public class Entity {
         setAction();
         LastDirection = direction;
         collisionOn = false;
-        System.out.println(possibleDirections);
+        //System.out.println(possibleDirections);
+        if(Entity.panicMode) {
+            if (Entity.playerDirection.equals("left") || Entity.playerDirection.equals("right")) {
+                Collections.swap(possibleDirections, 0, 1);
+                Collections.swap(possibleDirections, 2, 3);
+            }
+        }
         for (int i = 0; i < possibleDirections.size(); i++) {
             direction = possibleDirections.get(i);
             gp.collisionChecker.checkTile(this);

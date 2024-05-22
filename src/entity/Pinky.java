@@ -4,17 +4,15 @@ import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
 
-public class Blinky extends Entity {
+public class Pinky extends Entity{
     private Player player;
     private String mode = "scatter"; // Modes: "scatter", "chase"
     private long modeSwitchTimer;
     private long modeSwitchInterval = 23000; // Example interval in milliseconds
-    private Point scatterTarget = new Point(0, 0); // Top-right corner of the maze
+    private Point scatterTarget = new Point(27*gp.tileSize, 0); // Top-right corner of the maze
 
-    public Blinky(GamePanel gp, Player p) {
+    public Pinky(GamePanel gp, Player p) {
         super(gp);
         this.player = p;
         direction = "left";
@@ -22,13 +20,13 @@ public class Blinky extends Entity {
         bounds = new Rectangle(2, 2, 26, 26);
         boundX = bounds.x;
         boundsY = bounds.y;
-        getBlinkyImage();
+        getPinkyImage();
         modeSwitchTimer = System.currentTimeMillis();
     }
 
-    public void getBlinkyImage() {
+    public void getPinkyImage() {
         try {
-            character = ImageIO.read(getClass().getResource("/resources/images/characters/RedLeft.png"));
+            character = ImageIO.read(getClass().getResource("/resources/images/characters/PinkRight.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,7 +40,20 @@ public class Blinky extends Entity {
             target = scatterTarget;
         }
         else {
-            target = new Point(player.x, player.y);
+            switch (player.direction) {
+                case "left":
+                    target = new Point(player.x + 4 * gp.tileSize, player.y);
+                    break;
+                case "right":
+                    target = new Point(player.x - 4 * gp.tileSize, player.y);
+                    break;
+                case "up":
+                    target = new Point(player.x, player.y - 4 * gp.tileSize);
+                    break;
+                case "down":
+                    target = new Point(player.x, player.y + 4 * gp.tileSize);
+                    break;
+            }
         }
 //
 //        // Toggle between scatter and chase mode

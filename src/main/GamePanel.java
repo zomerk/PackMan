@@ -28,6 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter assetSetter = new AssetSetter(this, tileManager,player);
     Thread gameThread;
     public superObject[] obj = new superObject[330];
+    public superObject[] heart = new superObject[4];
     public Screens screens = new Screens(this);
     public Entity npc[] = new Entity[4];
 
@@ -35,6 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
    public final int playState = 1;
    public final int pauseState = 2;
    public final int endState = 3;
+   public final int loseState = 4;
 
 
     public GamePanel() {
@@ -111,6 +113,11 @@ public class GamePanel extends JPanel implements Runnable {
         for(int i =0; i < npc.length; i++){
             if(npc[i]!= null){
                 npc[i].draw(g2d);
+            }
+        }
+        for(int i =0; i < heart.length; i++){
+            if(heart[i]!= null){
+                heart[i].draw(g2d,this);
             }
         }
         player.draw(g2d);

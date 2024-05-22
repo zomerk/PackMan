@@ -35,12 +35,20 @@ public class Screens {
         if(gp.gameState == gp.endState){
             drawEndScreen();
         }
+        if(gp.gameState == gp.loseState){
+            drawLoseScreen();
+        }
 
     }
 
     public void drawEndScreen() {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,50f));
         String text = "YOU WON";
+        g2.drawString(text,280,400);
+    }
+    public void drawLoseScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,50f));
+        String text = "YOU LOST";
         g2.drawString(text,280,400);
     }
 

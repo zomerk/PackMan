@@ -153,17 +153,36 @@ public class Player extends Entity {
         else{
             LastDirection = "";
         }
+        Player.playerDirection = direction;
         int objIndex = gp.collisionChecker.checkObject(this,true);
-        //System.out.println(objIndex);
         pickUpObject(objIndex);
+        int  npcIndex = gp.collisionChecker.checkEntity(this,gp.npc);
+        interactNPC(npcIndex);
+        int heartCollision = gp.collisionChecker.checkHeart(this,true);
+        pickUpHeart(heartCollision);
+        //System.out.println(objIndex);
         //System.out.println(points);
 
 
     }
+
+    public void interactNPC(int npcIndex) {
+        if(npcIndex!= 999 ){
+            System.out.println("Kolicaj z npc");
+            //gp.gameState = gp.loseState;
+        }
+    }
+
     public void pickUpObject(int i){
         if(i != 999){
             gp.obj[i] = null;
             points += 1;
+        }
+    }
+    public void pickUpHeart(int i){
+        System.out.println(i);
+        if(i != 999){
+            gp.heart[i] = null;
         }
     }
     public void draw(Graphics2D g2d){
