@@ -8,6 +8,7 @@ import screens.Screens;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
@@ -31,7 +32,8 @@ public class GamePanel extends JPanel implements Runnable {
     public superObject[] heart = new superObject[4];
     public Screens screens = new Screens(this);
     public Entity npc[] = new Entity[4];
-
+    public LinkedList<Point> positionQueue = new LinkedList<>();
+    private boolean allMoved;
    public int gameState;
    public final int playState = 1;
    public final int pauseState = 2;
@@ -84,13 +86,34 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
+    public synchronized void addPosition(Point position) {
+        if (positionQueue.size() < 3) {
+            positionQueue.add(position);
+        }
 
+        if (positionQueue.size() == 3) {
+            allMoved = true;
+            notify();
+        }
+    }
+
+    public synchronized void waitForAllMoves() {
+        while (!allMoved) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        allMoved = false;
+        positionQueue.clear();
+    }
     public void update(){
         if(gameState == playState) {
-            player.update();
+            new Thread(player::update).start();
             for(int i = 0; i < npc.length; i++){
                 if(npc[i] != null){
-                    npc[i].update();
+                    new Thread(npc[i]::update).start();
                 }
             }
         }

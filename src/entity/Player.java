@@ -40,6 +40,7 @@ public class Player extends Entity {
         }
     }
     public void update() {
+        System.out.println("THRED PLAYER" + Thread.currentThread().getName());
         if(points == 321){
             gp.gameState = gp.endState;
         }
@@ -165,6 +166,7 @@ public class Player extends Entity {
         if(points == 311){
             gp.gameState = gp.endState;
         }
+        gp.addPosition(new Point(x, y));
 
 
     }

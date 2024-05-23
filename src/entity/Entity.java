@@ -88,6 +88,7 @@ public class Entity {
     }
     public void setAction(){}
     public void update() {
+        System.out.println("THREAD GHOST" + Thread.currentThread().getName());
         String wiadomosc = panicMode?"PANIKA":"POLOWANIE";
         System.out.println(wiadomosc);
         setAction();
@@ -208,6 +209,7 @@ public class Entity {
                 }
             }
         }
+        gp.addPosition(new Point(x, y));
     }
     public void draw(Graphics2D g2) {
         g2.drawImage(character, x, y, gp.tileSize, gp.tileSize, null);
