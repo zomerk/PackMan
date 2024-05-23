@@ -100,6 +100,7 @@ public class CollisionChecker {
                 target[i].bounds.y = target[i].y;
                 if(e.bounds.intersects(target[i].bounds)){
                     //e.collisionOn = true;
+                    target[i].dead = true;
                     index = i;
                 }
                 target[i].bounds = new Rectangle(2,2,26,26);

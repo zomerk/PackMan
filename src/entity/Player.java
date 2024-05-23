@@ -168,7 +168,7 @@ public class Player extends Entity {
 
     public void interactNPC(int npcIndex) {
         if(npcIndex!= 999 && !panicMode){
-            System.out.println("Kolicaj z npc");
+            //System.out.println("Kolicaj z npc");
             gp.gameState = gp.loseState;
         }
     }
@@ -180,7 +180,7 @@ public class Player extends Entity {
         }
     }
     public void pickUpHeart(int i){
-        System.out.println(i);
+        //System.out.println(i);
         if(i != 999){
             gp.heart[i] = null;
             Entity.triggerPanicMode();

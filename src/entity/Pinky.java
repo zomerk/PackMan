@@ -7,9 +7,6 @@ import java.awt.*;
 
 public class Pinky extends Entity{
     private Player player;
-    private String mode = "scatter"; // Modes: "scatter", "chase"
-    private long modeSwitchTimer;
-    private long modeSwitchInterval = 23000; // Example interval in milliseconds
     private Point scatterTarget = new Point(27*gp.tileSize, 0); // Top-right corner of the maze
 
     public Pinky(GamePanel gp, Player p) {
@@ -21,7 +18,6 @@ public class Pinky extends Entity{
         boundX = bounds.x;
         boundsY = bounds.y;
         getPinkyImage();
-        modeSwitchTimer = System.currentTimeMillis();
     }
 
     public void getPinkyImage() {
@@ -36,10 +32,18 @@ public class Pinky extends Entity{
     public void setAction() {
 //        long currentTime = System.currentTimeMillis();
         Point target = new Point();
-        if(panicMode){
+        if(dead){
+            speed = 3;
+            bounds = new Rectangle(3, 3, 25, 25);
+            target = new Point( gp.tileSize*15, gp.tileSize*13);
+        } else if (panicMode) {
+            speed = 1;
+            bounds = new Rectangle(1, 1, 27, 27);
             target = scatterTarget;
         }
         else {
+            speed = 2;
+            bounds = new Rectangle(2, 2, 26, 26);
             switch (player.direction) {
                 case "left":
                     target = new Point(player.x + 4 * gp.tileSize, player.y);

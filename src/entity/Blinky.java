@@ -38,10 +38,17 @@ public class Blinky extends Entity {
     public void setAction() {
 //        long currentTime = System.currentTimeMillis();
         Point target = new Point();
-        if(panicMode){
+        if(dead){
+            speed =3;
+            bounds = new Rectangle(3, 3, 25, 25);
+            target = new Point( gp.tileSize*11, gp.tileSize*13);
+        } else if (panicMode) {
+            speed = 1;
+            bounds = new Rectangle(1, 1, 27, 27);
             target = scatterTarget;
-        }
-        else {
+        } else {
+            speed = 2;
+            bounds = new Rectangle(2, 2, 26, 26);
             target = new Point(player.x, player.y);
         }
 //
