@@ -162,6 +162,9 @@ public class Player extends Entity {
         pickUpHeart(heartCollision);
         //System.out.println(objIndex);
         //System.out.println(points);
+        if(points == 311){
+            gp.gameState = gp.endState;
+        }
 
 
     }
