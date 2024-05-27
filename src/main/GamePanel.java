@@ -110,11 +110,11 @@ public class GamePanel extends JPanel implements Runnable {
      * @param position The position to add to the queue.
      */
     public synchronized void addPosition(Point position) {
-        if (positionQueue.size() < 3) {
+        if (positionQueue.size() < 4) {
             positionQueue.add(position);
         }
 
-        if (positionQueue.size() == 3) {
+        if (positionQueue.size() == 4) {
             allMoved = true;
             notify();
         }

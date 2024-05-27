@@ -1,6 +1,7 @@
 package main;
 import background.TileManager;
 import entity.Blinky;
+import entity.Clyde;
 import entity.Pinky;
 import entity.Player;
 import object.Heart;
@@ -79,5 +80,9 @@ public class AssetSetter {
          gp.npc[1] = new Pinky(gp,player);
          gp.npc[1].x = gp.tileSize*14;
          gp.npc[1].y = gp.tileSize*13;
+
+         gp.npc[2] = new Clyde(gp,player);
+         gp.npc[2].x = gp.tileSize*15;
+         gp.npc[2].y = gp.tileSize*13;
     }
 }
