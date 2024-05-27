@@ -4,11 +4,16 @@ import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-
+/**
+ * The Pinky class represents the Pinky enemy character in the game.
+ */
 public class Pinky extends Entity{
     private Player player;
     private Point scatterTarget = new Point(27*gp.tileSize, 0); // Top-right corner of the maze
 
+    /**
+     * The Pinky class represents the Pinky enemy character in the game.
+     */
     public Pinky(GamePanel gp, Player p) {
         super(gp);
         this.player = p;
@@ -19,7 +24,9 @@ public class Pinky extends Entity{
         boundsY = bounds.y;
         getPinkyImage();
     }
-
+    /**
+     * The Pinky class represents the Pinky enemy character in the game.
+     */
     public void getPinkyImage() {
         try {
             character = ImageIO.read(getClass().getResource("/resources/images/characters/PinkRight.png"));
@@ -27,7 +34,9 @@ public class Pinky extends Entity{
             e.printStackTrace();
         }
     }
-
+    /**
+     * The Pinky class represents the Pinky enemy character in the game.
+     */
     @Override
     public void setAction() {
 //        long currentTime = System.currentTimeMillis();

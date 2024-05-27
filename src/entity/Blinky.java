@@ -7,6 +7,10 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * The Blinky class represents the Blinky ghost in the game.
+ * Blinky behaves differently based on the game state.
+ */
 public class Blinky extends Entity {
     private Player player;
     private String mode = "scatter"; // Modes: "scatter", "chase"
@@ -14,6 +18,12 @@ public class Blinky extends Entity {
     private long modeSwitchInterval = 23000; // Example interval in milliseconds
     private Point scatterTarget = new Point(0, 0); // Top-right corner of the maze
 
+    /**
+     * Constructs a Blinky object with the specified GamePanel and Player.
+     *
+     * @param gp The GamePanel instance.
+     * @param p  The Player instance.
+     */
     public Blinky(GamePanel gp, Player p) {
         super(gp);
         this.player = p;
@@ -25,7 +35,9 @@ public class Blinky extends Entity {
         getBlinkyImage();
         modeSwitchTimer = System.currentTimeMillis();
     }
-
+    /**
+     * Loads the image for Blinky.
+     */
     public void getBlinkyImage() {
         try {
             character = ImageIO.read(getClass().getResource("/resources/images/characters/RedLeft.png"));
@@ -33,7 +45,9 @@ public class Blinky extends Entity {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Sets the action for Blinky based on the game state.
+     */
     @Override
     public void setAction() {
 //        long currentTime = System.currentTimeMillis();

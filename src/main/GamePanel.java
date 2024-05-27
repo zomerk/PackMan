@@ -10,6 +10,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;
 
+/**
+ * GamePanel class is responsible for the main game screen and game loop.
+ * It initializes game components, handles game state, and manages rendering.
+ */
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
     final int originalTileSize = 28; // 16x16 packman size
@@ -25,22 +29,25 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileManager = new TileManager(this);
     KeyHandler keyHandler = new KeyHandler(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    Player player = new Player(this,keyHandler);
-    public AssetSetter assetSetter = new AssetSetter(this, tileManager,player);
+    Player player = new Player(this, keyHandler);
+    public AssetSetter assetSetter = new AssetSetter(this, tileManager, player);
     Thread gameThread;
     public superObject[] obj = new superObject[330];
     public superObject[] heart = new superObject[4];
     public Screens screens = new Screens(this);
-    public Entity npc[] = new Entity[4];
+    public Entity[] npc = new Entity[4];
     public LinkedList<Point> positionQueue = new LinkedList<>();
     private boolean allMoved;
-   public int gameState;
-   public final int playState = 1;
-   public final int pauseState = 2;
-   public final int endState = 3;
-   public final int loseState = 4;
+    public int gameState;
+    public final int playState = 1;
+    public final int pauseState = 2;
+    public final int endState = 3;
+    public final int loseState = 4;
 
-
+    /**
+     * Constructor for GamePanel. Initializes the game panel's size, background color,
+     * and key listener, and sets it to be focusable.
+     */
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
@@ -48,44 +55,60 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
     }
-    public void setupGame(){
+
+    /**
+     * Sets up the game by placing objects and NPCs on the game panel.
+     * Initializes the game state to playState.
+     */
+    public void setupGame() {
         assetSetter.setObject();
         assetSetter.setNPC();
         gameState = playState;
     }
-    public void startGameThread(){
+
+    /**
+     * Starts the game thread.
+     */
+    public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
     }
-    //game loop
+
+    /**
+     * The main game loop. Manages game updates and rendering at a consistent frame rate.
+     */
     @Override
     public void run() {
+        double drawInterval = 1_000_000_000 / FPS;
+        double nextDrawTime = System.nanoTime() + drawInterval;
 
-        double drawInterval = 1_000_000_000/FPS;
-        double nextDrawTIme = System.nanoTime() + drawInterval;
-        while(gameThread.isAlive()){
-            if(gameState == 4){
+        while (gameThread.isAlive()) {
+            if (gameState == loseState) {
                 break;
             }
 
             update();
-
             repaint();
 
-            try{
-                double remainngTime = nextDrawTIme - System.nanoTime();
-                remainngTime = remainngTime / 1_000_000;
-                if(remainngTime < 0){
-                    remainngTime = 0;
+            try {
+                double remainingTime = nextDrawTime - System.nanoTime();
+                remainingTime /= 1_000_000;
+                if (remainingTime < 0) {
+                    remainingTime = 0;
                 }
-                Thread.sleep((long)remainngTime);
-
-                nextDrawTIme += drawInterval;
+                Thread.sleep((long) remainingTime);
+                nextDrawTime += drawInterval;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
     }
+
+    /**
+     * Adds a position to the position queue. When the queue is full (size 3),
+     * it sets the flag to notify that all entities have moved.
+     * @param position The position to add to the queue.
+     */
     public synchronized void addPosition(Point position) {
         if (positionQueue.size() < 3) {
             positionQueue.add(position);
@@ -97,6 +120,9 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * Waits until all entities have moved before continuing.
+     */
     public synchronized void waitForAllMoves() {
         while (!allMoved) {
             try {
@@ -108,48 +134,52 @@ public class GamePanel extends JPanel implements Runnable {
         allMoved = false;
         positionQueue.clear();
     }
-    public void update(){
-        if(gameState == playState) {
+
+    /**
+     * Updates the state of the game entities based on the current game state.
+     */
+    public void update() {
+        if (gameState == playState) {
             new Thread(player::update).start();
-            for(int i = 0; i < npc.length; i++){
-                if(npc[i] != null){
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
                     new Thread(npc[i]::update).start();
                 }
             }
         }
-        if(gameState == pauseState){
-
-        }
-        if(gameState == endState){
-
-        }
     }
-    public void paintComponent(Graphics g){
+
+    /**
+     * Renders the game objects and entities on the screen.
+     * @param g The Graphics object used for drawing.
+     */
+    @Override
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+
         tileManager.draw(g2d);
-        for(int i =0; i < obj.length; i++){
-            if(obj[i]!= null){
-                obj[i].draw(g2d,this);
+
+        for (superObject obj : obj) {
+            if (obj != null) {
+                obj.draw(g2d, this);
             }
         }
-        for(int i =0; i < npc.length; i++){
-            if(npc[i]!= null){
-                npc[i].draw(g2d);
+
+        for (Entity entity : npc) {
+            if (entity != null) {
+                entity.draw(g2d);
             }
         }
-        for(int i =0; i < heart.length; i++){
-            if(heart[i]!= null){
-                heart[i].draw(g2d,this);
+
+        for (superObject heart : heart) {
+            if (heart != null) {
+                heart.draw(g2d, this);
             }
         }
+
         player.draw(g2d);
         screens.draw(g2d);
         g2d.dispose();
-
     }
 }
-
-
-
-// https://arcarc.xmission.com/Web%20Archives/Pac%20Man/Pacman%20Graphics/PACANAC.htm

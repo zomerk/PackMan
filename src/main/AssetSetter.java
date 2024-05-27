@@ -6,16 +6,30 @@ import entity.Player;
 import object.Heart;
 import object.Point;
 
+/**
+ * The AssetSetter class is responsible for setting up game assets such as points, hearts, and NPCs.
+ */
 public class AssetSetter {
     GamePanel gp;
     TileManager tm;
     Player player;
+
+    /**
+     * Constructor for the AssetSetter class.
+     * @param gp The GamePanel instance.
+     * @param tm The TileManager instance.
+     * @param player The Player instance.
+     */
     public AssetSetter(GamePanel gp, TileManager tm, Player player) {
         this.gp = gp;
         this.tm = tm;
         this.player = player;
 
     }
+
+    /**
+     * Sets up points and hearts within the game world.
+     */
     public void setObject() {
         int k = 0;
         for(int i = 0; i < gp.maxScreenCol; i++) {
@@ -53,6 +67,10 @@ public class AssetSetter {
         gp.heart[3].bounds.y = gp.heart[3].wordY;
 
     }
+
+    /**
+     * Sets up points and hearts within the game world.
+     */
     public void setNPC(){
          gp.npc[0] = new Blinky(gp,player);
          gp.npc[0].x = gp.tileSize*13;

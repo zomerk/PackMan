@@ -7,10 +7,18 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * The Player class represents the player-controlled character in the game.
+ */
 public class Player extends Entity {
     KeyHandler keyHandler;
     int points = 0 ;
 
+    /**
+     * Constructor for the Player class.
+     * @param gp The GamePanel instance.
+     * @param keyHandler The KeyHandler instance.
+     */
     public Player(GamePanel gp, KeyHandler keyHandler) {
         super(gp);
         this.keyHandler = keyHandler;
@@ -20,6 +28,9 @@ public class Player extends Entity {
         boundX = bounds.x;
         boundsY = bounds.y;
     }
+    /**
+     * Sets default values for the player.
+     */
     public void setDefoultValues(){
         x = 300;
         y = 300;
@@ -27,6 +38,9 @@ public class Player extends Entity {
         direction = "down";
         LastDirection = "";
     }
+    /**
+     * Sets default values for the player.
+     */
     public void getPlayerImage(){
         try{
             up = ImageIO.read(getClass().getResource("/resources/images/characters/PacmanUp.png"));
@@ -39,6 +53,10 @@ public class Player extends Entity {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Updates the player's position and state based on user input and collisions.
+     */
     public void update() {
         System.out.println("THRED PLAYER" + Thread.currentThread().getName());
         if(points == 321){
@@ -171,19 +189,30 @@ public class Player extends Entity {
 
     }
 
+    /**
+     * Handles interactions with non-playable characters (NPCs).
+     * @param npcIndex The index of the NPC collided with.
+     */
     public void interactNPC(int npcIndex) {
         if(npcIndex!= 999 && !panicMode){
             //System.out.println("Kolicaj z npc");
             gp.gameState = gp.loseState;
         }
     }
-
+    /**
+     * Picks up objects within the game world.
+     * @param i The index of the object picked up.
+     */
     public void pickUpObject(int i){
         if(i != 999){
             gp.obj[i] = null;
             points += 1;
         }
     }
+    /**
+     * Picks up heart objects within the game world.
+     * @param i The index of the heart object picked up.
+     */
     public void pickUpHeart(int i){
         //System.out.println(i);
         if(i != 999){
@@ -191,6 +220,10 @@ public class Player extends Entity {
             Entity.triggerPanicMode();
         }
     }
+    /**
+     * Draws the player on the screen.
+     * @param g2d The Graphics2D object to draw with.
+     */
     public void draw(Graphics2D g2d){
         BufferedImage image = null;
         switch(direction){

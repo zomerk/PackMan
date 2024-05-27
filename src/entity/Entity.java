@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * The Entity class represents a generic entity in the game.
+ * It serves as a base class for other specific entities like Player, Ghost, etc.
+ */
 public class Entity {
     public static String playerDirection;
     public static boolean panicMode;
@@ -29,10 +33,17 @@ public class Entity {
     public LinkedList<String> possibleDirections;
     public boolean dead;
 
+    /**
+     * Constructor for the Entity class.
+     *
+     * @param gp The GamePanel instance.
+     */
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
-
+    /**
+     * Starts the panic mode, during which entities behave differently.
+     */
     public static void startPanicMode() {
         panicMode = true;
         if (panicModeTimer != null) {
@@ -47,6 +58,9 @@ public class Entity {
         }, PANIC_MODE_DURATION);
     }
 
+    /**
+     * Starts the panic mode, during which entities behave differently.
+     */
     public static void endPanicMode() {
         panicMode = false;
         if (panicModeTimer != null) {
@@ -54,12 +68,18 @@ public class Entity {
             panicModeTimer = null;
         }
     }
-
-    // Call this method to initialize the panic mode
+    /**
+     * Starts the panic mode, during which entities behave differently.
+     */
     public static void triggerPanicMode() {
         startPanicMode();
     }
 
+    /**
+     * Moves the entity towards the given target square.
+     *
+     * @param target The target square to move towards.
+     */
     public void moveToGivenSquare(Point target) {
         possibleDirections = new LinkedList<>();
         Point currentPos = new Point(x, y);
@@ -86,7 +106,13 @@ public class Entity {
             if (!possibleDirections.contains("down")) possibleDirections.add("down");
         }
     }
+    /**
+     * Sets the action for the entity based on the game state.
+     */
     public void setAction(){}
+    /**
+     * Updates the entity's position and behavior.
+     */
     public void update() {
         System.out.println("THREAD GHOST" + Thread.currentThread().getName());
         String wiadomosc = panicMode?"PANIKA":"POLOWANIE";
@@ -211,12 +237,13 @@ public class Entity {
         }
         gp.addPosition(new Point(x, y));
     }
+    /**
+     * Draws the entity on the graphics context.
+     *
+     * @param g2 The graphics context to draw on.
+     */
     public void draw(Graphics2D g2) {
         g2.drawImage(character, x, y, gp.tileSize, gp.tileSize, null);
-    }
-
-    private double getManhattanDistance(Point p1, Point p2) {
-        return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
     }
 
 }

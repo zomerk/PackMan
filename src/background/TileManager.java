@@ -10,12 +10,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
+/**
+ * The TileManager class manages the tiles used for the game background.
+ */
 public class TileManager {
     GamePanel gp;
     public Tile[] tiles;
     public int mapTileNum[][];
-
+    /**
+     * Constructs a TileManager object with the specified GamePanel.
+     *
+     * @param gp The GamePanel instance.
+     */
     public TileManager(GamePanel gp) {
         this.gp = gp;
         tiles = new Tile[27];
@@ -26,6 +32,9 @@ public class TileManager {
         loadTileImage();
 
     }
+    /**
+     * Loads the tile images from resources.
+     */
     public void loadTileImage() {
         try{
             InputStream is = getClass().getResourceAsStream("/resources/images/map/map.txt");
@@ -50,6 +59,9 @@ public class TileManager {
             e.printStackTrace();
         }
     }
+    /**
+     * Loads the tile images from the resource directory.
+     */
     public void getTileImage(){
         for(int i = 1; i <= 26; i++){
             try {
@@ -61,6 +73,11 @@ public class TileManager {
             }
         }
     }
+    /**
+     * Draws the tiles on the screen.
+     *
+     * @param g2 The Graphics2D object to draw on.
+     */
     public void draw(Graphics2D g2){
         int col = 0;
         int row = 0;

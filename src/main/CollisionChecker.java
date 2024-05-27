@@ -4,12 +4,23 @@ import entity.Entity;
 
 import java.awt.*;
 
+/**
+ * The CollisionChecker class is responsible for checking collisions between entities
+ * and other objects within the game world.
+ */
 public class CollisionChecker {
     GamePanel gp;
-
+    /**
+     * Constructor for the CollisionChecker class.
+     * @param gp The GamePanel instance.
+     */
     public CollisionChecker(GamePanel gp) {
         this.gp = gp;
     }
+    /**
+     * Checks for collisions between an entity and tiles based on its current direction.
+     * @param e The entity to check for collisions.
+     */
     public void checkTile(Entity e) {
         int entityLeftWordX = e.x + e.bounds.x;
         int entityRightWordX = e.x + e.bounds.x + e.bounds.width;
@@ -67,6 +78,12 @@ public class CollisionChecker {
                 break;
         }
     }
+    /**
+     * Checks for collisions between an entity and objects.
+     * @param e The entity to check for collisions.
+     * @param player A boolean value indicating whether the entity is a player.
+     * @return The index of the collided object.
+     */
     public int checkObject(Entity e, boolean player) {
         int index = 999;
         e.bounds.x = e.x;
@@ -90,6 +107,12 @@ public class CollisionChecker {
         return index;
 
     }
+    /**
+     * Checks for collisions between an entity and other entities.
+     * @param e The entity to check for collisions.
+     * @param target An array of entities to check against.
+     * @return The index of the collided entity.
+     */
     public int checkEntity(Entity e, Entity[] target) {
         int index = 999;
         e.bounds.x = e.x;
@@ -110,6 +133,12 @@ public class CollisionChecker {
         e.bounds.y = e.boundsY;
         return index;
     }
+    /**
+     * Checks for collisions between an entity and hearts.
+     * @param e The entity to check for collisions.
+     * @param player A boolean value indicating whether the entity is a player.
+     * @return The index of the collided heart.
+     */
     public int checkHeart(Entity e, boolean player) {
         int index = 999;
         e.bounds.x = e.x;
