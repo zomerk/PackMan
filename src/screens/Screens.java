@@ -53,7 +53,7 @@ public class Screens {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,50f));
         String text = "YOU LOST";
         g2.drawString(text,280,400);
-        String text2 =  "Press Enter to continue";
+        String text2 =  "Press Enter to restart";
         g2.drawString(text2,200,440);
         String text3 =  "Press Esc to exit";
         g2.drawString(text3,200,480);
