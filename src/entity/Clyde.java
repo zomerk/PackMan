@@ -53,6 +53,13 @@ public class Clyde extends Entity {
      * In scatter mode, Clyde moves towards a fixed target position.
      * In chase mode, Clyde moves towards the player's current position.
      */
+    public void setDefoultValues(){
+        x = gp.tileSize*13;
+        y = gp.tileSize*13;
+        speed = 2;
+        direction = "down";
+        LastDirection = "";
+    }
     @Override
     public void setAction() {
         Point target = new Point();

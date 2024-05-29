@@ -34,6 +34,13 @@ public class Pinky extends Entity{
             e.printStackTrace();
         }
     }
+    public void setDefoultValues(){
+        x = gp.tileSize*14;
+        y = gp.tileSize*13;
+        speed = 2;
+        direction = "down";
+        LastDirection = "";
+    }
     /**
      * The Pinky class represents the Pinky enemy character in the game.
      */

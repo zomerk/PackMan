@@ -35,6 +35,13 @@ public class Blinky extends Entity {
         getBlinkyImage();
         modeSwitchTimer = System.currentTimeMillis();
     }
+    public void setDefoultValues(){
+        x = gp.tileSize*15;
+        y = gp.tileSize*13;
+        speed = 2;
+        direction = "down";
+        LastDirection = "";
+    }
     /**
      * Loads the image for Blinky.
      */

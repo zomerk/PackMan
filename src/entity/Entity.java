@@ -192,9 +192,9 @@ public class Entity {
                         break;
                     }
                 }
-            if(x>gp.tileSize*11 && x<gp.tileSize*15 && y>gp.tileSize*11 && y<gp.tileSize*15) {
-                dead = false;
-            }
+                if(x>gp.tileSize*11 && x<gp.tileSize*15 && y>gp.tileSize*11 && y<gp.tileSize*15) {
+                    dead = false;
+                }
             }
         }
         else {
@@ -245,5 +245,6 @@ public class Entity {
     public void draw(Graphics2D g2) {
         g2.drawImage(character, x, y, gp.tileSize, gp.tileSize, null);
     }
+    public void reset(){}
 
 }

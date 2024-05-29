@@ -4,22 +4,37 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame window = new JFrame();
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-        window.setTitle("Packmanc");
-
-        GamePanel gamePanel = new GamePanel();
-        window.add(gamePanel);
-
-        window.pack();
-
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
-        gamePanel.setupGame();
-        gamePanel.startGameThread();
+        boolean end = false;
+        while(true) {
+            JFrame window = new JFrame();
+            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            window.setResizable(false);
+            window.setTitle("Packmanc");
+            GamePanel gamePanel = new GamePanel();
+            window.add(gamePanel);
+            window.pack();
+            window.setLocationRelativeTo(null);
+            window.setVisible(true);
+            gamePanel.setupGame();
+            gamePanel.startGameThread();
+            while(gamePanel.gameThread.isAlive()) {
+                if(gamePanel.gameState == gamePanel.loseState){
+                    while(true){
+                        if(gamePanel.keyHandler.enterPressed){
+                            System.out.println(gamePanel.gameThread.isAlive());
+                            break;
+                        }
+                        if(gamePanel.keyHandler.escapePressed){
+                            end = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            window.dispose();
+            if(end){
+                break;
+            }
+        }
     }
 }
-
-//https://github.com/arminkz/Pacman/tree/master/resources/images
-// https://www.youtube.com/watch?v=oPzPpUcDiYY&list=PL_QPQmz5C6WUF-pOQDsbsKbaBZqXj4qSq&index=7

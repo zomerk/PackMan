@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int maxScreenRow = 29;
     final int screenWidth = maxScreenCol * tileSize;
     final int screenHeight = maxScreenRow * tileSize;
+    public boolean end = false;
 
     double FPS = 60;
 
@@ -119,22 +120,6 @@ public class GamePanel extends JPanel implements Runnable {
             notify();
         }
     }
-
-    /**
-     * Waits until all entities have moved before continuing.
-     */
-    public synchronized void waitForAllMoves() {
-        while (!allMoved) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        allMoved = false;
-        positionQueue.clear();
-    }
-
     /**
      * Updates the state of the game entities based on the current game state.
      */
