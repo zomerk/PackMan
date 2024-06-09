@@ -57,7 +57,6 @@ public class Blinky extends Entity {
      */
     @Override
     public void setAction() {
-//        long currentTime = System.currentTimeMillis();
         Point target = new Point();
         if(dead){
             speed =3;
@@ -72,15 +71,6 @@ public class Blinky extends Entity {
             bounds = new Rectangle(2, 2, 26, 26);
             target = new Point(player.x, player.y);
         }
-//
-//        // Toggle between scatter and chase mode
-//        if ((currentTime - modeSwitchTimer) < modeSwitchInterval) {
-//            target = scatterTarget;
-//        } else {
-//            if ((currentTime - modeSwitchTimer) >= 2 * modeSwitchInterval) {
-//                modeSwitchTimer = currentTime;
-//            }
-//        }
 
         moveToGivenSquare(target);
     }
